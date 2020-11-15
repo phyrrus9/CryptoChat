@@ -1,0 +1,60 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:models="clr-namespace:SecureTalk.Models"
+        xmlns:viewmodels="clr-namespace:SecureTalk.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="500"
+        x:Class="SecureTalk.MainWindow"
+        Title="SecureTalk">
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition MaxWidth="200" MinWidth="200" />
+      <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
+    <ListBox Grid.Column="0" Background="Gray" SelectionMode="Single" x:Name="lstContacts">
+      <ListBox.ItemTemplate>
+        <DataTemplate DataType="{x:Type models:Contact}">
+          <Border Background="Black" Padding="4">
+            <Grid RowDefinitions="*,*">
+              <TextBlock Grid.Row="0" Foreground="White" FontSize="14" Text="{Binding DisplayName}" />
+              <TextBlock Grid.Row="1" Foreground="Gray" FontSize="9" Text="{Binding UserId}" IsVisible="{Binding IsContact}" />
+            </Grid>
+          </Border>
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+    </ListBox>
+    <Grid Grid.Column="1">
+      <Grid.RowDefinitions>
+        <RowDefinition MinHeight="400" />
+        <RowDefinition MinHeight="28" Height="Auto" />
+      </Grid.RowDefinitions>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" MinWidth="500" />
+        <ColumnDefinition Width="Auto" />
+      </Grid.ColumnDefinitions>
+      <ListBox Grid.Row="0" Grid.ColumnSpan="2" Background="Blue" x:Name="lstMessages">
+        <ListBox.ItemTemplate>
+          <DataTemplate DataType="{x:Type viewmodels:DecryptedMessage}">
+            <Grid RowDefinitions="*,*">
+              <TextBlock HorizontalAlignment="{Binding Alignment}"
+                         Text="{Binding Message}"
+                         Background="Gray"
+                         MaxWidth="400"
+                         TextWrapping="Wrap"
+                         Grid.Row="0"
+                         VerticalAlignment="Stretch"/>
+              <TextBlock HorizontalAlignment="{Binding Alignment}"
+                         Text="{Binding Date}"
+                         Background="Gray"
+                         Grid.Row="1"
+                         FontSize="7" />
+            </Grid>
+          </DataTemplate>
+        </ListBox.ItemTemplate>
+      </ListBox>
+      <TextBox Background="Green" Grid.Row="1" Grid.Column="0" Foreground="LightGray" Text="message..." x:Name="tbMessage" />
+      <Button Grid.Row="1" Grid.Column="1" IsEnabled="False" x:Name="btnSendMessage">Send</Button>
+    </Grid>
+  </Grid>
+</Window>
